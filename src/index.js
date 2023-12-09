@@ -4,9 +4,21 @@ import connectDB from "./db/db.js";
 
 dotenv.config({path:'./env'})// but still will not work because we are making it so we will do change  in package.json use as a experminetal feateure  so directly load enviorment variable  so 
 connectDB()
+.then( ()=>{
+  app.on("error",(error)=>{
+      console.log("ERROR DECTED",error);
+      throw error
+  })
+  app.listen(process.env.PORT ||8000, ()=>{
+    console.log(`server is runnning on port :${process.env.PORT}`)
+  })
+})
+.catch((err)=>{
+  console.log(`error detected  Mongodbconnect fail${err}`)
+})
 /*  First appporach
 import express from "express";
-const app = expressxpress()
+const app = express()
 // function connectDB(){
 // }
 // connectDB()// or make it iife
